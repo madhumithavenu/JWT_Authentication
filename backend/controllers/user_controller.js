@@ -48,8 +48,16 @@ async function login(req, res, next) {
         return res.status(401).json({ message: "Invalid Password" })
     }
     const token = jwt.sign({ _id: existingUser._id }, process.env.JWT_SECRET_KEY, {
-        expiresIn: "1hr"
+        expiresIn: "30s"
     });
+    res.cookie(String(existingUser._id),token,{
+
+        path: '/',
+        expires: new Date(Date.now() + 1000 * 30),
+        httpOnly: true,
+        sameSite: 'lax'
+    })
+
     return res.status(200).json({ message: 'Successfully Loggedin', user: existingUser, token });
 }
 
