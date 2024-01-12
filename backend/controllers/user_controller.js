@@ -48,12 +48,11 @@ async function login(req, res, next) {
         return res.status(401).json({ message: "Invalid Password" })
     }
     const token = jwt.sign({ _id: existingUser._id }, process.env.JWT_SECRET_KEY, {
-        expiresIn: "30s"
+        expiresIn: "35s"
     });
     res.cookie(String(existingUser._id),token,{
-
         path: '/',
-        expires: new Date(Date.now() + 1000 * 360),
+        expires: new Date(Date.now() + 1000 * 30),
         httpOnly: true,
         sameSite: 'lax'
     })
@@ -76,6 +75,10 @@ async function getUser(req, res) {
     return res.status(200).json({user});
 }
 
+
+function refreshToken(req,res,next){
+
+}
 
 exports.signup = signup;
 exports.login = login;
