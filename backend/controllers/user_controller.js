@@ -53,7 +53,7 @@ async function login(req, res, next) {
     res.cookie(String(existingUser._id),token,{
 
         path: '/',
-        expires: new Date(Date.now() + 1000 * 30),
+        expires: new Date(Date.now() + 1000 * 360),
         httpOnly: true,
         sameSite: 'lax'
     })
@@ -68,7 +68,7 @@ async function getUser(req, res) {
     try {
         user = await User.findById(userID, "-password");
     } catch (err) {
-        return new Error(err)
+        return console.log(err);
     }
     if(!user){
         return res.status(401).json({message: "User Not Found"});
