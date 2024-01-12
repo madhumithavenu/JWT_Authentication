@@ -50,7 +50,12 @@ async function login(req, res, next) {
     const token = jwt.sign({ _id: existingUser._id }, process.env.JWT_SECRET_KEY, {
         expiresIn: "35s"
     });
-    res.cookie(String(existingUser._id),token,{
+    console.log("generated token\n", token);
+    if (req.cookies[`${existingUser._id}`]) {
+        req.cookies[`${existingUser._id}`] = ""
+    }
+
+    res.cookie(String(existingUser._id), token, {
         path: '/',
         expires: new Date(Date.now() + 1000 * 30),
         httpOnly: true,
@@ -69,14 +74,14 @@ async function getUser(req, res) {
     } catch (err) {
         return console.log(err);
     }
-    if(!user){
-        return res.status(401).json({message: "User Not Found"});
+    if (!user) {
+        return res.status(401).json({ message: "User Not Found" });
     }
-    return res.status(200).json({user});
+    return res.status(200).json({ user });
 }
 
 
-function refreshToken(req,res,next){
+function refreshToken(req, res, next) {
 
 }
 

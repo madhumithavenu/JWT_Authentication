@@ -7,7 +7,7 @@ function refreshToken(req, res, next) {
 
     const cookies = req.headers.cookie;
     if (!cookies) {
-        return res.status(404).json({ message: "No token found" });
+        return res.status(402).json({ message: "No token found" });
     }
 
     const prevToken = cookies.split('=')[1];
@@ -17,13 +17,14 @@ function refreshToken(req, res, next) {
             return res.status(403).json({ message: "Authentication failed" });
         }
         res.clearCookie(`${user._id}`);
-        req.cookies[`${user._id}`] ="";
+        req.cookies[`${user._id}`] = "";
 
-        const token = jwt.sign({_id: user._id},process.env.JWT_SECRET_KEY, {
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY, {
             expiresIn: "35s"
         })
+        console.log("Regenerated token\n", token);
 
-        res.cookie(String(user._id),token,{
+        res.cookie(String(user._id), token, {
             path: '/',
             expires: new Date(Date.now() + 1000 * 30),
             httpOnly: true,
