@@ -35,7 +35,7 @@ function Header() {
               textColor='inherit'>
               {!isLoggedIn && <><Tab to='/login' LinkComponent={Link} label="Login" />
               <Tab to='/signup' LinkComponent={Link} label="Signup" /></>}
-              {isLoggedIn && <Tab onClick={handleLogout} to='/logout' LinkComponent={Link} label="Logout" />}
+              {isLoggedIn && <Tab onClick={handleLogout} to='/' LinkComponent={Link} label="Logout" />}
             </Tabs>
           </Box>
         </Toolbar>
