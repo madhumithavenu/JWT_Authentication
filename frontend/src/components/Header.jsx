@@ -16,6 +16,7 @@ function Header() {
             textColor='inherit'>
               <Tab to='/login' LinkComponent={Link} label="Login" />
               <Tab to='/signup' LinkComponent={Link} label="Signup" />
+              <Tab to='/logout' LinkComponent={Link} label="Logout" />
             </Tabs>
           </Box>
         </Toolbar>
